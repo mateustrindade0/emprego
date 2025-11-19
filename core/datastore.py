@@ -1,0 +1,239 @@
+"""
+DataStore — Camada de persistência do Meu Emprego.
+
+Responsabilidades:
+- Centralizar acesso aos dados das candidaturas.
+- Tentar usar MongoDB Atlas como backend principal.
+- Fazer fallback automático para CSV (`assets/candidaturas.csv`) se o Mongo falhar.
+- Garantir consistência entre campos (empresa, cargo, data, tipo, status, observacoes, link).
+"""
+
+import csv
+import os
+import datetime
+from pathlib import Path
+from typing import List, Dict, Optional
+
+from dotenv import load_dotenv
+
+# Tenta importar MongoDB
+try:
+    from pymongo import MongoClient
+    PYMONGO_AVAILABLE = True
+except Exception:
+    PYMONGO_AVAILABLE = False
+
+
+# Campos base da aplicação
+CSV_FIELDS = [
+    "empresa",
+    "cargo",
+    "data",
+    "tipo",
+    "status",
+    "observacoes",
+    "link",
+]
+
+
+class DataStore:
+    """
+    Persistência unificada: MongoDB (primário) ou CSV (fallback).
+    A aplicação usa sempre os mesmos métodos independentemente do backend.
+    """
+
+    def __init__(self, mongo_uri: str = None, db_name: str = "meu_emprego"):
+        # Carrega variáveis do .env
+        load_dotenv()
+
+        # URI definida pelo .env ou passada por parâmetro
+        self.mongo_uri = mongo_uri or os.getenv("MEU_EMPREGO_MONGO_URI")
+        self.db_name = db_name
+
+        # Caminho do CSV para fallback
+        self.csv_path = Path(
+            os.getenv("CANDIDATURAS_CSV_PATH", "assets/candidaturas.csv")
+        )
+
+        self.client = None
+        self.db = None
+        self.use_mongo: bool = False
+
+        self._connect_mongo()
+        self._ensure_csv()
+
+    # ----------------------------------------------------------------------
+    # MONGO
+    # ----------------------------------------------------------------------
+    def _connect_mongo(self):
+        """
+        Tenta conectar no MongoDB.
+        Se falhar, ativa fallback para CSV sem quebrar o app.
+        """
+
+        if not (PYMONGO_AVAILABLE and self.mongo_uri):
+            self.use_mongo = False
+            return
+
+        try:
+            self.client = MongoClient(
+                self.mongo_uri,
+                serverSelectionTimeoutMS=6000,
+            )
+            # Teste real de conexão
+            self.client.server_info()
+
+            self.db = self.client[self.db_name]
+            self.use_mongo = True
+
+        except Exception as e:
+            print("\n[ERRO MONGO] Falha ao conectar:", e, "\n")
+            self.client = None
+            self.db = None
+            self.use_mongo = False
+
+    def test_connection(self) -> Dict[str, str]:
+        """Usado pelo botão 🌐 na UI."""
+        if not self.mongo_uri:
+            return {"ok": False, "msg": "Nenhuma URI configurada"}
+
+        if not PYMONGO_AVAILABLE:
+            return {"ok": False, "msg": "pymongo não instalado"}
+
+        try:
+            info = self.client.server_info()
+            return {"ok": True, "server": info.get("version", "?")}
+        except Exception as e:
+            return {"ok": False, "msg": str(e)}
+
+    # ----------------------------------------------------------------------
+    # CSV fallback
+    # ----------------------------------------------------------------------
+    def _ensure_csv(self):
+        """Cria o CSV caso não exista ou arruma cabeçalho incorreto."""
+        if not self.csv_path.exists():
+            self.csv_path.parent.mkdir(parents=True, exist_ok=True)
+            with self.csv_path.open("w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                writer.writerow(CSV_FIELDS)
+            return
+
+        # Garantir cabeçalho correto
+        with self.csv_path.open("r", encoding="utf-8") as f:
+            lines = f.readlines()
+
+        if not lines or "empresa" not in lines[0].lower():
+            with self.csv_path.open("w", newline="", encoding="utf-8") as f:
+                writer = csv.writer(f)
+                writer.writerow(CSV_FIELDS)
+
+    # ----------------------------------------------------------------------
+    # INSERT
+    # ----------------------------------------------------------------------
+    def insert_candidatura(self, doc: Dict) -> Dict:
+        """
+        Insere uma candidatura no Mongo ou CSV.
+        """
+
+        # Converter datas para datetime no Mongo
+        if isinstance(doc.get("data"), str):
+            try:
+                doc["data"] = datetime.datetime.fromisoformat(doc["data"])
+            except Exception:
+                pass
+
+        # MongoDB
+        if self.use_mongo:
+            try:
+                res = self.db["candidaturas"].insert_one(doc)
+                return {"ok": True, "id": str(res.inserted_id), "backend": "mongo"}
+            except Exception:
+                self.use_mongo = False  # desativa mongo e cai para CSV
+
+        # CSV fallback
+        self._ensure_csv()
+        with self.csv_path.open("a", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow([
+                doc.get("empresa", ""),
+                doc.get("cargo", ""),
+                doc.get("data", ""),
+                doc.get("tipo", ""),
+                doc.get("status", ""),
+                doc.get("observacoes", ""),
+                doc.get("link", ""),
+            ])
+
+        return {"ok": True, "backend": "csv"}
+
+    # ----------------------------------------------------------------------
+    # READ
+    # ----------------------------------------------------------------------
+    def list_candidaturas(
+        self,
+        limit: Optional[int] = None,
+        order_by_date_desc: bool = True,
+    ) -> List[Dict]:
+        """
+        Lista registros do Mongo ou CSV.
+        """
+
+        # ------------------ MONGO ------------------
+        if self.use_mongo:
+            try:
+                cursor = self.db["candidaturas"].find()
+
+                if order_by_date_desc:
+                    cursor = cursor.sort("data", -1)
+                if limit:
+                    cursor = cursor.limit(limit)
+
+                items = []
+                for d in cursor:
+                    dt = d.get("data")
+                    if hasattr(dt, "isoformat"):
+                        dt = dt.isoformat()
+
+                    items.append({
+                        "empresa": d.get("empresa", ""),
+                        "cargo": d.get("cargo", ""),
+                        "data": dt or "",
+                        "tipo": d.get("tipo", ""),
+                        "status": d.get("status", ""),
+                        "observacoes": d.get("observacoes", ""),
+                        "link": d.get("link", ""),
+                    })
+
+                return items
+
+            except Exception:
+                self.use_mongo = False  # falhou → CSV
+
+        # ------------------ CSV ------------------
+        self._ensure_csv()
+
+        items = []
+        with self.csv_path.open("r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                if any(row.values()):
+                    items.append(row)
+
+        # Normalização
+        for r in items:
+            for field in CSV_FIELDS:
+                r[field] = r.get(field, "")
+
+        # Ordenação por data
+        try:
+            items.sort(
+                key=lambda x: x.get("data", ""),
+                reverse=order_by_date_desc,
+            )
+        except Exception:
+            pass
+
+        if limit:
+            return items[:limit]
+
+        return items

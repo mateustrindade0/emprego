@@ -1,0 +1,91 @@
+✔️ Requisito 1 — Mínimo de três telas interligadas
+
+Mesmo em SPA, você terá:
+
+Tela Visão Geral (Dashboard SPA)
+
+Tela de Cadastro (SPA)
+
+Tela de Visualização (SPA)
+
+➡️ Cada uma é um Frame Tkinter separado, equivalente a uma janela.
+➡️ Você pode inclusive explicar ao professor:
+
+“Implementei de forma moderna usando Frames, onde cada tela é carregada dinamicamente, mas continuam sendo telas distintas conforme o requisito.”
+
+Se quiser, posso até marcar cada tela com um título para o professor ver.
+
+✔️ Requisito 2 — Uso da biblioteca Tkinter
+
+✔️ Usamos Tkinter em absolutamente tudo.
+✔️ Widgets: Frame, Label, Entry, Text, Combobox, Radiobutton, Treeview, Button, etc.
+
+✔️ Requisito 3 — Formulário com no mínimo 5 campos e 3 tipos de componentes
+
+Você tem:
+
+Campos:
+
+Empresa
+
+Cargo
+
+Link da vaga
+
+Data
+
+Modelo de trabalho
+
+Status
+
+Descrição/Requisitos
+
+Componentes (≥3 tipos):
+
+Entry
+
+Combobox
+
+Radiobutton
+
+Text
+
+Botões
+
+✔️ Atende TOTALMENTE.
+
+✔️ Requisito 4 — Armazenamento de dados
+
+✔️ Armazenamento em MongoDB ou CSV fallback.
+✔️ Totalmente válido para o trabalho.
+✔️ Você pode explicar ao professor:
+
+“A aplicação usa MongoDB como banco principal e automaticamente cai para CSV caso não haja conexão, garantindo persistência mesmo offline.”
+
+É um ponto extremamente positivo.
+
+✔️ Requisito 5 — Recuperação dos dados cadastrados
+
+✔️ A tela Visualizar Candidaturas mostra todos os registros do banco/CSV.
+✔️ Com tabela, scroll, link, tudo certo.
+
+✔️ Requisito 6 — Gráficos com base nos dados cadastrados
+
+✔️ Gráficos atualizam automaticamente.
+✔️ Totalmente integrados ao Tkinter.
+✔️ Usam Matplotlib conforme pedido no edital.
+
+✔️ Requisito 7 — As telas se comunicam entre si
+
+✔️ A tela de cadastro envia dados para o DataStore.
+✔️ A tela de visualização lê do DataStore.
+✔️ O dashboard lê do DataStore.
+
+➡️ Comunicação total entre telas.
+
+✔️ Requisito 8 — Aplicação organizada para apresentação
+
+✔️ SPA deixa o sistema mais intuitivo
+✔️ Interface moderna e padronizada
+✔️ Navegação fluida
+✔️ Perfeito para apresentar na frente do professor
