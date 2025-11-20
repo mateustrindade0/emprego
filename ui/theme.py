@@ -37,9 +37,17 @@ def apply_theme(root):
     default_font = tkfont.nametofont("TkDefaultFont")
     default_font.configure(size=16)
 
+    # Preferência por Poppins quando disponível
+    try:
+        available = set(tkfont.families())
+    except Exception:
+        available = set()
+
+    preferred_family = "Poppins" if "Poppins" in available else default_font.cget("family")
+
     title_font = tkfont.Font(
         root=root,
-        family=default_font.cget("family"),
+        family=preferred_family,
         size=22,
         weight="bold",
     )
@@ -58,6 +66,9 @@ def apply_theme(root):
         style.configure("TLabel", background=BG, foreground=TEXT)
         style.configure("TEntry", padding=8)
 
+        # Fonte para botões: Poppins (bold) quando disponível
+        button_font = (preferred_family, 11, "bold")
+
         style.configure(
             "TButton",
             padding=10,
@@ -65,6 +76,7 @@ def apply_theme(root):
             background=PRIMARY,
             foreground="white",
             borderwidth=0,
+            font=button_font,
         )
         style.map(
             "TButton",
@@ -78,6 +90,7 @@ def apply_theme(root):
             background=PRIMARY,
             foreground="white",
             borderwidth=0,
+            font=button_font,
         )
 
         style.configure(
@@ -87,10 +100,17 @@ def apply_theme(root):
             background=BG,
             foreground=TEXT,
             borderwidth=0,
+            font=(preferred_family, 10),
         )
 
         # Treeview cabeçalho mais legível
         style.configure("Treeview.Heading", font=heading_font)
+
+        # Aplicar fonte padrão do app como fonte 'TkDefaultFont' (útil para widgets que leem esse nome)
+        try:
+            default_font.config(family=preferred_family)
+        except Exception:
+            pass
 
     except Exception:
         pass
