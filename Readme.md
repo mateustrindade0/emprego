@@ -168,13 +168,16 @@ python3 app.py
 
 Exemplo de .env:
 
-MEU_EMPREGO_MONGO_URI="mongodb+srv://usuario:senha@cluster.mongodb.net/?retryWrites=true&w=majority&appName=MeuEmprego"
+```bash
+MEU_EMPREGO_MONGO_URI="Insira a Chave do seu banco de dados Aqui"
 MEU_EMPREGO_DB_NAME="meu_emprego"
 CANDIDATURAS_CSV_PATH="assets/candidaturas.csv"
 APP_ENV="development"
 DEBUG=1
+```
 
 ## 🧪 Estrutura de Dados Gravados
+```json
 {
   "empresa": "Google",
   "cargo": "Desenvolvedor",
@@ -184,6 +187,7 @@ DEBUG=1
   "observacoes": "Processo iniciado",
   "link": "https://..."
 }
+```
 
 ## 📊 Telas do Sistema
 
@@ -200,4 +204,3 @@ Gráficos
 ## 🏁 Conclusão
 
 O sistema “Meu Emprego” é robusto, organizado, escalável e cumpre rigorosamente todas as exigências do trabalho.
-Seu código é modular, limpo e pronto para manutenção futura.
