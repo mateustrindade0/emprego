@@ -2,7 +2,6 @@
 Componentes reutilizáveis de UI para o Meu Emprego.
 """
 
-import tkinter as tk
 from tkinter import ttk
 
 
