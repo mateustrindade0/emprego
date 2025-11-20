@@ -50,7 +50,7 @@ A aplicação é dividida em módulos bem definidos, garantindo organização e 
 ```
 
 ## 🔍 Fluxo de Funcionamento
-1️⃣ app.py
+### 1️⃣ app.py
 
 Carrega o .env (MongoDB)
 
@@ -60,7 +60,7 @@ Carrega o tema
 
 Abre a interface principal (Dashboard)
 
-2️⃣ DataStore (core/datastore.py)
+### 2️⃣ DataStore (core/datastore.py)
 
 Responsável por toda a persistência, incluindo:
 
@@ -76,7 +76,7 @@ Chamado por:
 → Visualização
 → Gráficos
 
-3️⃣ UI (ui/)
+### 3️⃣ UI (ui/)
 
 Dividida em camadas profissionais:
 
@@ -114,7 +114,7 @@ Atualização automática
 
 Mostra todos os campos
 
-4️⃣ Gráficos (graphics/)
+### 4️⃣ Gráficos (graphics/)
 
 Inclui:
 
