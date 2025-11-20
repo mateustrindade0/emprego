@@ -145,12 +145,19 @@ class DataStore:
 
         # Sempre salva no CSV (backup)
         self._ensure_csv()
+        data_str = doc.get("data", "")
+        if data_str:
+            try:
+                y, m, d = data_str.split('-')
+                data_str = f"{d}-{m}-{y}"
+            except:
+                pass
         with self.csv_path.open("a", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
             writer.writerow([
                 doc.get("empresa", ""),
                 doc.get("cargo", ""),
-                doc.get("data", ""),
+                data_str,
                 doc.get("tipo", ""),
                 doc.get("status", ""),
                 doc.get("observacoes", ""),
@@ -173,7 +180,7 @@ class DataStore:
     def list_candidaturas(
         self,
         limit: Optional[int] = None,
-        order_by_date_desc: bool = True,
+        order_by_date_desc: bool = False,
     ) -> List[Dict]:
         """
         Lista registros do Mongo ou CSV.
@@ -194,6 +201,13 @@ class DataStore:
                     dt = d.get("data")
                     if hasattr(dt, "isoformat"):
                         dt = dt.isoformat()
+                        # DD-MM-YYYY
+                        if dt:
+                            try:
+                                y, m, d = dt.split('-')
+                                dt = f"{d}-{m}-{y}"
+                            except:
+                                pass
 
                     items.append({
                         "empresa": d.get("empresa", ""),
