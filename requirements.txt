@@ -1,0 +1,4 @@
+matplotlib>=3.0
+pandas>=2.0
+pymongo>=4.0
+python-dotenv>=1.0

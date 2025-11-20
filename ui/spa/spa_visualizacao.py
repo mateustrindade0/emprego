@@ -238,7 +238,7 @@ class SPAVisualizacao(ttk.Frame):
     def _get_selected_link(self):
         selected = self.tree.selection()
         if not selected:
-            messagebox.showwarning("Aviso", "Selecione uma linha.")
+            messagebox.showwarning("Aviso", "Selecione uma candidatura.")
             return None
 
         values = self.tree.item(selected[0], "values")

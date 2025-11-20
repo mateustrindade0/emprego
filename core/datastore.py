@@ -132,25 +132,18 @@ class DataStore:
     # ----------------------------------------------------------------------
     def insert_candidatura(self, doc: Dict) -> Dict:
         """
-        Insere uma candidatura no Mongo ou CSV.
+        Insere uma candidatura no Mongo (se disponível) E sempre no CSV para backup.
         """
 
         # Converter datas para datetime no Mongo
-        if isinstance(doc.get("data"), str):
+        doc_mongo = doc.copy()
+        if isinstance(doc_mongo.get("data"), str):
             try:
-                doc["data"] = datetime.datetime.fromisoformat(doc["data"])
+                doc_mongo["data"] = datetime.datetime.fromisoformat(doc_mongo["data"])
             except Exception:
                 pass
 
-        # MongoDB
-        if self.use_mongo:
-            try:
-                res = self.db["candidaturas"].insert_one(doc)
-                return {"ok": True, "id": str(res.inserted_id), "backend": "mongo"}
-            except Exception:
-                self.use_mongo = False  # desativa mongo e cai para CSV
-
-        # CSV fallback
+        # Sempre salva no CSV (backup)
         self._ensure_csv()
         with self.csv_path.open("a", newline="", encoding="utf-8") as f:
             writer = csv.writer(f)
@@ -163,6 +156,14 @@ class DataStore:
                 doc.get("observacoes", ""),
                 doc.get("link", ""),
             ])
+
+        # MongoDB (se disponível)
+        if self.use_mongo:
+            try:
+                res = self.db["candidaturas"].insert_one(doc_mongo)
+                return {"ok": True, "id": str(res.inserted_id), "backend": "mongo+csv"}
+            except Exception:
+                self.use_mongo = False  # desativa mongo, mas CSV já foi salvo
 
         return {"ok": True, "backend": "csv"}
 

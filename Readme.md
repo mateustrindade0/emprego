@@ -1,6 +1,6 @@
-Sistema Meu Emprego
+# Sistema Meu Emprego
 Python + Tkinter + MongoDB/CSV + Matplotlib
-📌 Visão Geral
+## 📌 Visão Geral
 
 Meu Emprego é um sistema desktop para controle de candidaturas, desenvolvido para fins acadêmicos utilizando Python, Tkinter, MongoDB Atlas e gráficos em Matplotlib.
 O objetivo é registrar candidaturas, visualizar todas as vagas aplicadas, gerar gráficos analíticos e fornecer um dashboard completo para acompanhamento da jornada de busca por emprego.
@@ -15,7 +15,7 @@ O projeto cumpre todos os requisitos acadêmicos, incluindo:
 ✔ Três telas integradas (Dashboard, Cadastro, Visualização)
 ✔ Código modular e organizado por camadas
 
-🏗 Arquitetura do Sistema
+## 🏗 Arquitetura do Sistema
 
 A aplicação é dividida em módulos bem definidos, garantindo organização e facilidade de manutenção:
 
@@ -48,7 +48,7 @@ meu_emprego/
     ├── GRAPH_GUIDE.md            → Guia técnico de gráficos
     └── __init__.py
 
-🔍 Fluxo de Funcionamento
+## 🔍 Fluxo de Funcionamento
 1️⃣ app.py
 
 Carrega o .env (MongoDB)
@@ -123,7 +123,7 @@ Gráfico de linha (evolução por data)
 
 Estilização avançada usando helpers.py
 
-🧩 Tecnologias Utilizadas
+## 🧩 Tecnologias Utilizadas
 Camada	Tecnologia
 Interface	Tkinter
 Dados	MongoDB Atlas + CSV
@@ -131,8 +131,12 @@ Gráficos	Matplotlib
 Manipulação	Python 3.12+
 Configuração	python-dotenv
 Estrutura	SPA modular Tkinter
-⚙️ Instalação e Execução
-🪟 Windows
+
+
+## ⚙️ Instalação e Execução
+
+### 🪟 Windows
+
 1) Ativar ambiente virtual (recomendado)
 python -m venv .venv
 .venv\Scripts\Activate
@@ -143,17 +147,23 @@ pip install -r requirements.txt
 3) Rodar
 python app.py
 
-🐧 Linux (Ubuntu/Debian)
-1) Instalar Tkinter
+### 🐧 Linux (Ubuntu/Debian)
+1) Criar ambiente virtual (recomendado)
+python3 -m venv .venv
+
+2) Ativar ambiente virtual
+source .venv/bin/activate
+
+3) Instalar Tkinter
 sudo apt install python3-tk
 
-2) Instalar dependências
+4) Instalar dependências
 pip3 install -r requirements.txt
 
-3) Executar
+5) Executar
 python3 app.py
 
-🌐 Variáveis de Ambiente (.env)
+## 🌐 Variáveis de Ambiente (.env)
 
 Exemplo de .env:
 
@@ -163,7 +173,7 @@ CANDIDATURAS_CSV_PATH="assets/candidaturas.csv"
 APP_ENV="development"
 DEBUG=1
 
-🧪 Estrutura de Dados Gravados
+## 🧪 Estrutura de Dados Gravados
 {
   "empresa": "Google",
   "cargo": "Desenvolvedor",
@@ -174,7 +184,7 @@ DEBUG=1
   "link": "https://..."
 }
 
-📊 Telas do Sistema
+## 📊 Telas do Sistema
 
 (Serão adicionadas no relatório ABNT com imagens)
 
@@ -186,7 +196,7 @@ Visualização
 
 Gráficos
 
-🏁 Conclusão
+## 🏁 Conclusão
 
 O sistema “Meu Emprego” é robusto, organizado, escalável e cumpre rigorosamente todas as exigências do trabalho.
 Seu código é modular, limpo e pronto para manutenção futura.
