@@ -52,79 +52,59 @@ A aplicação é dividida em módulos bem definidos, garantindo organização e 
 ## 🔍 Fluxo de Funcionamento
 ### 1️⃣ app.py
 
-Carrega o .env (MongoDB)
-
-Inicializa o DataStore
-
-Carrega o tema
-
-Abre a interface principal (Dashboard)
+- Carrega o .env (MongoDB)
+- Inicializa o DataStore
+- Carrega o tema
+- Abre a interface principal (Dashboard)
 
 ### 2️⃣ DataStore (core/datastore.py)
 
 Responsável por toda a persistência, incluindo:
 
-Conexão com MongoDB Atlas
-
-Criação automática do CSV
-
-Save e read dinâmicos (MongoDB → primário / CSV → fallback)
+- Conexão com MongoDB Atlas
+- Criação automática do CSV
+- Save e read dinâmicos (MongoDB → primário / CSV → fallback)
 
 Chamado por:
-→ Dashboard
-→ Cadastro
-→ Visualização
-→ Gráficos
+- Dashboard
+- Cadastro
+- Visualização
+- Gráficos
 
 ### 3️⃣ UI (ui/)
 
 Dividida em camadas profissionais:
 
-🖥 MainWindow (Dashboard)
+#### 🖥 MainWindow (Dashboard)
+- Resumo geral
+- Botão "Cadastrar Vaga"
+- Botão "Visualizar Candidaturas"
+- Área de gráficos animados
 
-Resumo geral
-
-Botão “Cadastrar Vaga”
-
-Botão “Visualizar Candidaturas”
-
-Área de gráficos animados
-
-📝 Cadastro
-
+#### 📝 Cadastro
 Widgets usados:
-
-Entry (empresa, cargo, data)
-
-Combobox (tipo)
-
-Radiobutton (status)
-
-Text (observações)
-
-Button estilizado
+- Entry (empresa, cargo, data)
+- Combobox (tipo)
+- Radiobutton (status)
+- Text (observações)
+- Button estilizado
 
 Ao enviar → grava via insert_candidatura()
 
-📊 Visualização (TreeView)
-
-Lista todas as candidaturas
-
-Atualização automática
-
-Mostra todos os campos
+#### 📊 Visualização (TreeView)
+- Lista todas as candidaturas
+- Atualização automática
+- Mostra todos os campos
 
 ### 4️⃣ Gráficos (graphics/)
 
 Inclui:
-
-Gráfico de barras por status
-
-Gráfico de linha (evolução por data)
-
-Estilização avançada usando helpers.py
+- Gráfico de barras por status
+- Gráfico de linha (evolução por data)
+- Estilização avançada usando helpers.py
 
 ## 🧩 Tecnologias Utilizadas
+```
 Camada	Tecnologia
 Interface	Tkinter
 Dados	MongoDB Atlas + CSV
@@ -132,6 +112,7 @@ Gráficos	Matplotlib
 Manipulação	Python 3.12+
 Configuração	python-dotenv
 Estrutura	SPA modular Tkinter
+```
 
 
 ## ⚙️ Instalação e Execução
