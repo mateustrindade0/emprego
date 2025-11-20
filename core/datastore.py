@@ -16,7 +16,7 @@ from typing import List, Dict, Optional
 
 from dotenv import load_dotenv
 
-# Tenta importar MongoDB
+# Tenta importar MongoDB caso de erro vai para CSV
 try:
     from pymongo import MongoClient
     PYMONGO_AVAILABLE = True
@@ -46,11 +46,11 @@ class DataStore:
         # Carrega variáveis do .env
         load_dotenv()
 
-        # URI definida pelo .env ou passada por parâmetro
+        # URI definida pelo .env 
         self.mongo_uri = mongo_uri or os.getenv("MEU_EMPREGO_MONGO_URI")
         self.db_name = db_name
 
-        # Caminho do CSV para fallback
+        # Caminho do CSV para fallback caso a conexão com Mongo falhe
         self.csv_path = Path(
             os.getenv("CANDIDATURAS_CSV_PATH", "assets/candidaturas.csv")
         )
@@ -80,7 +80,6 @@ class DataStore:
                 self.mongo_uri,
                 serverSelectionTimeoutMS=6000,
             )
-            # Teste real de conexão
             self.client.server_info()
 
             self.db = self.client[self.db_name]
@@ -118,7 +117,7 @@ class DataStore:
                 writer.writerow(CSV_FIELDS)
             return
 
-        # Garantir cabeçalho correto
+        # garantir cabeçalho correto
         with self.csv_path.open("r", encoding="utf-8") as f:
             lines = f.readlines()
 
@@ -135,7 +134,7 @@ class DataStore:
         Insere uma candidatura no Mongo (se disponível) E sempre no CSV para backup.
         """
 
-        # Converter datas para datetime no Mongo
+        # converter datas para datetime no Mongo
         doc_mongo = doc.copy()
         if isinstance(doc_mongo.get("data"), str):
             try:
@@ -180,7 +179,7 @@ class DataStore:
     def list_candidaturas(
         self,
         limit: Optional[int] = None,
-        order_by_date_desc: bool = False,
+        order_by_date_desc: bool = True,
     ) -> List[Dict]:
         """
         Lista registros do Mongo ou CSV.
@@ -234,17 +233,21 @@ class DataStore:
                 if any(row.values()):
                     items.append(row)
 
-        # Normalização
+        # normalização
         for r in items:
             for field in CSV_FIELDS:
                 r[field] = r.get(field, "")
 
-        # Ordenação por data
+        # ordenação por data
         try:
-            items.sort(
-                key=lambda x: x.get("data", ""),
-                reverse=order_by_date_desc,
-            )
+            def date_key(x):
+                d_str = x.get("data", "")
+                try:
+                    d, m, y = d_str.split('-')
+                    return datetime.date(int(y), int(m), int(d))
+                except:
+                    return datetime.date.min
+            items.sort(key=date_key, reverse=order_by_date_desc)
         except Exception:
             pass
 

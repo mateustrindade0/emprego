@@ -48,7 +48,7 @@ def main():
     # ------------------------------------------------------------------
     # 4) Instancia a MainWindow SPA
     # ------------------------------------------------------------------
-    _app = MainWindow(root, datastore)  # noqa: F841 (apenas para manter referência)
+    _app = MainWindow(root, datastore) 
 
     # Dimensões iniciais (simples, centralizado na tela)
     try:

@@ -27,10 +27,7 @@ def ActionButton(
     **kwargs,
 ):
     """
-    Botão de ação estilizado.
-
-    - width: largura em caracteres (None => automático)
-    - style: estilo ttk (por padrão Rounded.TButton)
+    Botão de ação.
     """
     params = dict(text=text, command=command, style=style, **kwargs)
     if width is not None:

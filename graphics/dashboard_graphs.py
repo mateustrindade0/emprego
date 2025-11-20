@@ -28,7 +28,7 @@ except Exception:
 
 
 # --------------------------------------------------------------------------
-# Função utilitária para localizar a coluna correta ignorando maiúsculas/minúsculas
+# função utilitária para localizar a coluna correta ignorando maiúsculas/minúsculas
 # --------------------------------------------------------------------------
 def _find_col(df: pd.DataFrame, *names: str) -> Optional[str]:
     cols = {c.lower(): c for c in df.columns}
@@ -39,7 +39,7 @@ def _find_col(df: pd.DataFrame, *names: str) -> Optional[str]:
 
 
 # --------------------------------------------------------------------------
-# Função correta para normalizar datas vindas do MongoDB e CSV
+# função correta para normalizar datas vindas do MongoDB e CSV
 # --------------------------------------------------------------------------
 def _normalize_date(v):
     """

@@ -77,7 +77,6 @@ class SPAVisualizacao(ttk.Frame):
         self.tree.column("status", width=110, minwidth=70, anchor="w", stretch=False)
         self.tree.column("observacoes", width=300, minwidth=120, anchor="w", stretch=True)
 
-        # Grade principal da Treeview
         self.tree.grid(row=1, column=0, sticky="nsew")
 
         # Scrollbars: vertical à direita e horizontal abaixo
@@ -87,18 +86,17 @@ class SPAVisualizacao(ttk.Frame):
 
         hscroll = ttk.Scrollbar(self, orient="horizontal", command=self.tree.xview)
         self.tree.configure(xscroll=hscroll.set)
-        # horizontal abaixo da tabela; isso empurra a paginação para baixo
+        # horizontal abaixo da tabela;
         hscroll.grid(row=2, column=0, sticky="ew")
 
-        # Bind para redimensionar colunas dinamicamente
+        # redimensionar colunas dinamicamente
         try:
             self.bind("<Configure>", self._on_configure)
-            # redimensionamento inicial
             self.after(50, self._resize_columns)
         except Exception:
             pass
 
-        # Paginação simples (prev / página / next)
+        # paginação (prev / página / next)
         pag_frame = ttk.Frame(self)
         pag_frame.grid(row=3, column=0, sticky="w", pady=(8, 0))
 
@@ -125,10 +123,9 @@ class SPAVisualizacao(ttk.Frame):
             btn_frame, text="Copiar Link", command=self._copy_link
         ).pack(side="left", padx=4)
 
-        # Carrega dados inicialmente
+        # carrega dados 
         self._load_data()
 
-        # Melhor visual: aumenta um pouco a altura das linhas
         try:
             style = ttk.Style(self)
             style.configure("Treeview", rowheight=26)
@@ -175,7 +172,7 @@ class SPAVisualizacao(ttk.Frame):
                 ),
             )
 
-        # Ajusta colunas automaticamente com base no conteúdo visível
+        # ajusta colunas automaticamente com base no conteúdo visível
         try:
             self._autosize_columns(page_rows)
         except Exception:
@@ -302,13 +299,13 @@ class SPAVisualizacao(ttk.Frame):
         padding = 18
         max_widths = {}
 
-        # Começa pelo tamanho do cabeçalho
+        # começa pelo tamanho do cabeçalho
         for c in cols:
             header = self.tree.heading(c).get("text", c)
             w = (font.measure(header) if font else len(header) * 8) + padding
             max_widths[c] = w
 
-        # Verifica conteúdo da página atual
+        # vecrifica conteúdo da página atual
         for r in rows:
             for c in cols:
                 txt = str(r.get(c, ""))
@@ -316,7 +313,7 @@ class SPAVisualizacao(ttk.Frame):
                 if m > max_widths.get(c, 0):
                     max_widths[c] = m
 
-        # Se houver espaço restante, distribui preferencialmente para 'link' e 'observacoes'
+        # se houver espaço restante, distribui preferencialmente para 'link' e 'observacoes'
         total_needed = sum(max_widths.values())
         avail = self.winfo_width() or self.winfo_reqwidth() or 800
         # reserva para scrollbar e margens
@@ -328,7 +325,7 @@ class SPAVisualizacao(ttk.Frame):
             max_widths["link"] = max_widths.get("link", 100) + add_link
             max_widths["observacoes"] = max_widths.get("observacoes", 100) + add_obs
 
-        # Aplica larguras calculadas
+        # aplica larguras calculadas
         for c, w in max_widths.items():
             try:
                 self.tree.column(c, width=int(w), minwidth=60)

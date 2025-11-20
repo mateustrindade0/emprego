@@ -103,10 +103,10 @@ def apply_theme(root):
             font=(preferred_family, 10),
         )
 
-        # Treeview cabeçalho mais legível
+        # Treeview cabeçalho
         style.configure("Treeview.Heading", font=heading_font)
 
-        # Aplicar fonte padrão do app como fonte 'TkDefaultFont' (útil para widgets que leem esse nome)
+        # fonte padrão
         try:
             default_font.config(family=preferred_family)
         except Exception:

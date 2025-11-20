@@ -27,7 +27,7 @@ class MainWindow:
     """
     Controlador principal da SPA.
 
-    Ele não é um Frame — é o coordenador que recebe a janela Tk,
+    coordenador que recebe a janela Tk,
     monta a estrutura e controla qual painel SPA fica visível.
     """
 
@@ -53,18 +53,18 @@ class MainWindow:
         self._resize_after = None
         self._last_title_sz = None
 
-        # Referências da UI
+        # referências da UI
         self.summary_label: ttk.Label | None = None
         self.content_frame: ttk.Frame | None = None
         self.current_view: ttk.Frame | None = None
 
-        # Constrói layout
+        # constrói layout
         self._build_layout()
 
-        # Abre o Dashboard como tela inicial
+        # abre o Dashboard
         self.show_dashboard()
 
-        # Listener para responsividade do título
+        # responsividade do título
         self.root.bind("<Configure>", self._on_root_resize)
 
     # =====================================================================
@@ -76,12 +76,11 @@ class MainWindow:
         frame_root = BaseFrame(self.root, padding=16)
         frame_root.grid(sticky="nsew")
 
-        # Expansão
         self.root.columnconfigure(0, weight=1)
         self.root.rowconfigure(0, weight=1)
 
-        frame_root.columnconfigure(0, weight=0)  # navegação lateral
-        frame_root.columnconfigure(1, weight=1)  # painel dinâmico
+        frame_root.columnconfigure(0, weight=0) 
+        frame_root.columnconfigure(1, weight=1)  
         frame_root.rowconfigure(2, weight=1)
 
         # -------------------------------------------------------------
@@ -96,7 +95,6 @@ class MainWindow:
         # Linha de metadados (apenas ícones aqui). Backend mostrado no rodapé.
         # Mantemos espaço para os ícones no topo direito.
         # (O label de 'Candidaturas' será criado pela view do Dashboard)
-        # meta_frame foi removido para não duplicar informações.
 
         # Ícones do cabeçalho
         icons_frame = ttk.Frame(frame_root)
@@ -148,7 +146,7 @@ class MainWindow:
         self.content_frame.columnconfigure(0, weight=1)
         self.content_frame.rowconfigure(0, weight=1)
 
-        # Rodapé: mostra o backend/pendência atual (mantém mesma posição horizontal)
+        # Rodapé: mostra o backend/pendência atual
         footer = ttk.Frame(frame_root)
         footer.grid(row=3, column=0, sticky="w", columnspan=2, pady=(8, 0))
         InfoLabel(footer, text=f"Conectado ao {backend}", font=("TkDefaultFont", 9)).pack(side="left")
@@ -170,7 +168,6 @@ class MainWindow:
         self.current_view = view_cls(self.content_frame, self.datastore)
         self.current_view.grid(row=0, column=0, sticky="nsew")
 
-        # Se a view fornecer um label de resumo, registre-o aqui
         self.summary_label = getattr(self.current_view, "summary_label", self.summary_label)
 
         # Atualiza o contador no cabeçalho

@@ -1,53 +1,53 @@
 empresa,cargo,data,tipo,status,observacoes,link
-NextVision,UI Designer Jr,01-11-2025,Remoto,Rejeitado,,https://vaga14.com
-Cortex AI,ML Intern,01-11-2025,Híbrido,Inscrito,,https://vaga36.com
-King Solutions,Fullstack Jr,02-11-2025,Híbrido,Inscrito,Boa expectativa.,https://vaga15.com
-TechCloud,Dev Jr,03-11-2025,Presencial,Inscrito,,https://vaga16.com
-Rocket Systems,Backend Go Jr,03-11-2025,Remoto,Rejeitado,,https://vaga47.com
-AutoDev,Python Jr,04-11-2025,Remoto,Rejeitado,Código não aprovado.,https://vaga17.com
-PrimeCode,Java Jr,05-11-2025,Híbrido,Entrevista,Triagem técnica OK.,https://vaga18.com
-Ultra Systems,Estágio TI,05-11-2025,Remoto,Inscrito,,https://vaga33.com
-SigmaTech,Suporte Jr,06-11-2025,Presencial,Inscrito,,https://vaga19.com
-Velox Brasil,C# Jr,07-11-2025,Remoto,Inscrito,,https://vaga20.com
-InfinitySoft,React Jr,07-11-2025,Presencial,Inscrito,,https://vaga48.com
-SuperDev,Node.js Jr,08-11-2025,Remoto,Entrevista,RH entrou em contato.,https://vaga21.com
-FastTech,React Jr,09-11-2025,Híbrido,Rejeitado,,https://vaga22.com
-WinData,Analytics Intern,09-11-2025,Remoto,Entrevista,,https://vaga39.com
-GreenCode,Dev Jr,10-11-2025,Presencial,Inscrito,,https://vaga23.com
-BrightWorks,Mobile Intern,10-11-2025,Híbrido,Entrevista,,https://vaga49.com
-NovaWeb,Estágio Dev,11-11-2025,Remoto,Inscrito,,https://vaga24.com
-SolidTech,Python Jr,11-11-2025,Remoto,Inscrito,,https://vaga44.com
-MicroDev,Mobile Jr,12-11-2025,Híbrido,Rejeitado,,https://vaga25.com
-Lambda Labs,Dev Jr,12-11-2025,Híbrido,Inscrito,,https://vaga46.com
-CodeX,DevOps Jr,13-11-2025,Presencial,Entrevista,,https://vaga26.com
+DVI Diagnostico,QA,21-11-2025,,Rejeitado,teste,
+Empresa Teste Final,Teste final,20-11-2025,Presencial,Rejeitado,,
+QuantumCo,Backend Jr,19-11-2025,Presencial,Inscrito,,https://vaga32.com
+SunTech,Junior Developer,18-11-2025,Híbrido,Inscrito,,https://vaga31.com
+BrightCode,AI Research Intern,17-11-2025,Remoto,Entrevista,,https://vaga30.com
+HiTech,FullStack Jr,16-11-2025,Presencial,Rejeitado,,https://vaga29.com
+eNext,QA Jr,15-11-2025,Híbrido,Inscrito,,https://vaga28.com
 Alpha Labs,Python Jr,14-11-2025,Remoto,Inscrito,,https://vaga27.com
 HyperSoft,Backend Node Jr,14-11-2025,Híbrido,Rejeitado,,https://vaga40.com
-eNext,QA Jr,15-11-2025,Híbrido,Inscrito,,https://vaga28.com
-HiTech,FullStack Jr,16-11-2025,Presencial,Rejeitado,,https://vaga29.com
-BrightCode,AI Research Intern,17-11-2025,Remoto,Entrevista,,https://vaga30.com
-SunTech,Junior Developer,18-11-2025,Híbrido,Inscrito,,https://vaga31.com
-Empresa A,Desenvolvedor Jr,19-10-2025,Remoto,Inscrito,Primeiro contato enviado.,https://vaga1.com
-RaptorTech,Dev Jr,19-10-2025,Remoto,Rejeitado,,https://vaga34.com
-QuantumCo,Backend Jr,19-11-2025,Presencial,Inscrito,,https://vaga32.com
-TechPrime,Frontend Jr,20-10-2025,Híbrido,Inscrito,Aguardando retorno.,https://vaga2.com
-Empresa Teste Final,Teste final,20-11-2025,Presencial,Rejeitado,,
-InovaCode,Estágio Back-end,21-10-2025,Presencial,Rejeitado,Feedback automático.,https://vaga3.com
-DVI Diagnostico,QA,21-11-2025,,Rejeitado,teste,
-SoftWare Brasil,Fullstack Jr,22-10-2025,Híbrido,Entrevista,Entrevista marcada.,https://vaga4.com
-AgileTech,DevOps Jr,23-10-2025,Remoto,Inscrito,,https://vaga5.com
-Optima Labs,C++ Jr,23-10-2025,Presencial,Inscrito,,https://vaga35.com
-Blue Systems,Analista Jr,24-10-2025,Presencial,Rejeitado,Não passou no teste.,https://vaga6.com
-DigitalHub,QA Tester Jr,25-10-2025,Remoto,Entrevista,Retorno positivo.,https://vaga7.com
-AlphaSoft,DevSecOps Jr,25-10-2025,Híbrido,Rejeitado,,https://vaga43.com
-GigaDev,API Developer,26-10-2025,Remoto,Inscrito,,https://vaga8.com
-NextCode,Suporte Técnico,27-10-2025,Híbrido,Inscrito,Aguardando triagem.,https://vaga9.com
-ZenCode,Dev Jr,27-10-2025,Remoto,Inscrito,,https://vaga41.com
-DataSoft,Estágio Dados,28-10-2025,Remoto,Rejeitado,,https://vaga10.com
-WebLab,React Native Jr,28-10-2025,Remoto,Entrevista,,https://vaga37.com
-OpenCloud,Cloud Jr,29-10-2025,Presencial,Inscrito,,https://vaga11.com
-PineCode,Estágio Web,29-10-2025,Presencial,Entrevista,,https://vaga45.com
+CodeX,DevOps Jr,13-11-2025,Presencial,Entrevista,,https://vaga26.com
+MicroDev,Mobile Jr,12-11-2025,Híbrido,Rejeitado,,https://vaga25.com
+Lambda Labs,Dev Jr,12-11-2025,Híbrido,Inscrito,,https://vaga46.com
+NovaWeb,Estágio Dev,11-11-2025,Remoto,Inscrito,,https://vaga24.com
+SolidTech,Python Jr,11-11-2025,Remoto,Inscrito,,https://vaga44.com
+GreenCode,Dev Jr,10-11-2025,Presencial,Inscrito,,https://vaga23.com
+BrightWorks,Mobile Intern,10-11-2025,Híbrido,Entrevista,,https://vaga49.com
+FastTech,React Jr,09-11-2025,Híbrido,Rejeitado,,https://vaga22.com
+WinData,Analytics Intern,09-11-2025,Remoto,Entrevista,,https://vaga39.com
+SuperDev,Node.js Jr,08-11-2025,Remoto,Entrevista,RH entrou em contato.,https://vaga21.com
+Velox Brasil,C# Jr,07-11-2025,Remoto,Inscrito,,https://vaga20.com
+InfinitySoft,React Jr,07-11-2025,Presencial,Inscrito,,https://vaga48.com
+SigmaTech,Suporte Jr,06-11-2025,Presencial,Inscrito,,https://vaga19.com
+PrimeCode,Java Jr,05-11-2025,Híbrido,Entrevista,Triagem técnica OK.,https://vaga18.com
+Ultra Systems,Estágio TI,05-11-2025,Remoto,Inscrito,,https://vaga33.com
+AutoDev,Python Jr,04-11-2025,Remoto,Rejeitado,Código não aprovado.,https://vaga17.com
+TechCloud,Dev Jr,03-11-2025,Presencial,Inscrito,,https://vaga16.com
+Rocket Systems,Backend Go Jr,03-11-2025,Remoto,Rejeitado,,https://vaga47.com
+King Solutions,Fullstack Jr,02-11-2025,Híbrido,Inscrito,Boa expectativa.,https://vaga15.com
+NextVision,UI Designer Jr,01-11-2025,Remoto,Rejeitado,,https://vaga14.com
+Cortex AI,ML Intern,01-11-2025,Híbrido,Inscrito,,https://vaga36.com
+CyberWorks,Pentest Jr,31-10-2025,Remoto,Inscrito,,https://vaga13.com
+NovaDigital,Frontend Intern,31-10-2025,Presencial,Inscrito,,https://vaga42.com
 SparkIT,Backend Jr,30-10-2025,Híbrido,Entrevista,Boa triagem.,https://vaga12.com
 BlueNetwork,Dev Jr,30-10-2025,Presencial,Inscrito,,https://vaga38.com
 PowerTech,Estágio TI,30-10-2025,Remoto,Contratado,Único contratado — pedido do usuário.,https://vaga50.com
-CyberWorks,Pentest Jr,31-10-2025,Remoto,Inscrito,,https://vaga13.com
-NovaDigital,Frontend Intern,31-10-2025,Presencial,Inscrito,,https://vaga42.com
+OpenCloud,Cloud Jr,29-10-2025,Presencial,Inscrito,,https://vaga11.com
+PineCode,Estágio Web,29-10-2025,Presencial,Entrevista,,https://vaga45.com
+DataSoft,Estágio Dados,28-10-2025,Remoto,Rejeitado,,https://vaga10.com
+WebLab,React Native Jr,28-10-2025,Remoto,Entrevista,,https://vaga37.com
+NextCode,Suporte Técnico,27-10-2025,Híbrido,Inscrito,Aguardando triagem.,https://vaga9.com
+ZenCode,Dev Jr,27-10-2025,Remoto,Inscrito,,https://vaga41.com
+GigaDev,API Developer,26-10-2025,Remoto,Inscrito,,https://vaga8.com
+DigitalHub,QA Tester Jr,25-10-2025,Remoto,Entrevista,Retorno positivo.,https://vaga7.com
+AlphaSoft,DevSecOps Jr,25-10-2025,Híbrido,Rejeitado,,https://vaga43.com
+Blue Systems,Analista Jr,24-10-2025,Presencial,Rejeitado,Não passou no teste.,https://vaga6.com
+AgileTech,DevOps Jr,23-10-2025,Remoto,Inscrito,,https://vaga5.com
+Optima Labs,C++ Jr,23-10-2025,Presencial,Inscrito,,https://vaga35.com
+SoftWare Brasil,Fullstack Jr,22-10-2025,Híbrido,Entrevista,Entrevista marcada.,https://vaga4.com
+InovaCode,Estágio Back-end,21-10-2025,Presencial,Rejeitado,Feedback automático.,https://vaga3.com
+TechPrime,Frontend Jr,20-10-2025,Híbrido,Inscrito,Aguardando retorno.,https://vaga2.com
+Empresa A,Desenvolvedor Jr,19-10-2025,Remoto,Inscrito,Primeiro contato enviado.,https://vaga1.com
+RaptorTech,Dev Jr,19-10-2025,Remoto,Rejeitado,,https://vaga34.com

@@ -26,7 +26,7 @@ class SPADashboard(ttk.Frame):
     # LAYOUT
     # =====================================================================
     def _build(self):
-        # Cabeçalho interno
+        # cabeçalho interno
         header = ttk.Frame(self)
         header.grid(row=0, column=0, sticky="ew", pady=(0, 8))
         header.columnconfigure(0, weight=1)
@@ -38,7 +38,7 @@ class SPADashboard(ttk.Frame):
             font=("TkDefaultFont", 18, "bold"),
         ).grid(row=0, column=0, sticky="w")
 
-        # Label de resumo (Candidaturas) no lado oposto do título
+        # label de resumo (Candidaturas) no lado oposto do título
         self.summary_label = InfoLabel(header, text="Candidaturas: 0")
         self.summary_label.grid(row=0, column=1, sticky="e")
 
