@@ -15,38 +15,39 @@ O projeto cumpre todos os requisitos acadêmicos, incluindo:
 ✔ Três telas integradas (Dashboard, Cadastro, Visualização)
 ✔ Código modular e organizado por camadas
 
-## 🏗 Arquitetura do Sistema
+## Arquitetura do Sistema
 
 A aplicação é dividida em módulos bem definidos, garantindo organização e facilidade de manutenção:
 
-meu_emprego/
-│ app.py                 → Ponto de entrada principal
-│ requirements.txt       → Dependências
-│ .env.example           → Modelo de variáveis de ambiente
-│
-├── core/                → Camada de dados (MongoDB + CSV)
-│   ├── datastore.py     → Classe DataStore (CRUD e fallback)
-│   └── __init__.py
-│
-├── ui/                  → Interface gráfica Tkinter
-│   ├── main_window.py            → Dashboard
-│   ├── spa/                      → Versão SPA modular
-│   │   ├── spa_cadastro.py
-│   │   ├── spa_dashboard.py
-│   │   └── spa_visualizacao.py
-│   ├── theme.py                  → Sistema de design/Tema
-│   ├── widgets.py                → Componentes reutilizáveis
-│   └── __init__.py
-│
-├── graphics/            → Gráficos integrados ao Tkinter
-│   ├── dashboard_graphs.py
-│   ├── helpers.py
-│   └── __init__.py
-│
-└── assets/
-    ├── candidaturas.csv          → Banco CSV (fallback)
-    ├── GRAPH_GUIDE.md            → Guia técnico de gráficos
-    └── __init__.py
+```
+├── 📁 assets
+│   ├── 📝 GRAPH_GUIDE.md
+│   ├── 📕 Relatorio_MeuEmprego_ABNT.pdf
+│   ├── 🐍 __init__.py
+│   └── 📄 candidaturas.csv
+├── 📁 core
+│   ├── 🐍 __init__.py
+│   └── 🐍 datastore.py
+├── 📁 graphics
+│   ├── 🐍 __init__.py
+│   ├── 🐍 dashboard_graphs.py
+│   └── 🐍 helpers.py
+├── 📁 ui
+│   ├── 📁 spa
+│   │   ├── 🐍 spa_cadastro.py
+│   │   ├── 🐍 spa_dashboard.py
+│   │   └── 🐍 spa_visualizacao.py
+│   ├── 🐍 __init__.py
+│   ├── 🐍 main_window.py
+│   ├── 🐍 theme.py
+│   └── 🐍 widgets.py
+├── ⚙️ .env.example
+├── ⚙️ .gitignore
+├── 📝 Readme.md
+├── 📄 RequisitosCheck.txt
+├── 🐍 app.py
+└── 📄 requirements.txt
+```
 
 ## 🔍 Fluxo de Funcionamento
 1️⃣ app.py
