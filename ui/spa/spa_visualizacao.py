@@ -2,7 +2,6 @@
 SPA Visualização — Tabela de candidaturas.
 """
 
-import tkinter as tk
 from tkinter import ttk, messagebox
 import tkinter.font as tkfont
 import webbrowser

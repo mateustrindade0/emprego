@@ -10,7 +10,6 @@ Contém:
 • Gráfico de linha (Candidaturas nos últimos 30 dias)
 """
 
-from pathlib import Path
 from typing import Optional
 import datetime
 
