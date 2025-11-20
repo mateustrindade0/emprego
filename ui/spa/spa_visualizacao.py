@@ -2,7 +2,9 @@
 SPA Visualização — Tabela de candidaturas.
 """
 
+import tkinter as tk
 from tkinter import ttk, messagebox
+import tkinter.font as tkfont
 import webbrowser
 
 from ui.widgets import InfoLabel
@@ -22,6 +24,9 @@ class SPAVisualizacao(ttk.Frame):
 
         self.columnconfigure(0, weight=1)
         self.rowconfigure(1, weight=1)
+
+        # Debounce handle for resize
+        self._resize_after = None
 
         self._build()
 
@@ -55,33 +60,48 @@ class SPAVisualizacao(ttk.Frame):
             height=14,
         )
 
-        # Cabeçalhos
-        self.tree.heading("empresa", text="Empresa")
-        self.tree.heading("cargo", text="Cargo")
-        self.tree.heading("link", text="Link da Vaga")
-        self.tree.heading("data", text="Data")
-        self.tree.heading("tipo", text="Modelo")
-        self.tree.heading("status", text="Status")
-        self.tree.heading("observacoes", text="Observações")
+        # Cabeçalhos (alinhados à esquerda para melhor leitura)
+        self.tree.heading("empresa", text="Empresa", anchor="w")
+        self.tree.heading("cargo", text="Cargo", anchor="w")
+        self.tree.heading("link", text="Link da Vaga", anchor="w")
+        self.tree.heading("data", text="Data", anchor="w")
+        self.tree.heading("tipo", text="Modelo", anchor="w")
+        self.tree.heading("status", text="Status", anchor="w")
+        self.tree.heading("observacoes", text="Observações", anchor="w")
 
-        # Larguras
-        self.tree.column("empresa", width=130)
-        self.tree.column("cargo", width=130)
-        self.tree.column("link", width=200)
-        self.tree.column("data", width=80)
-        self.tree.column("tipo", width=90)
-        self.tree.column("status", width=100)
-        self.tree.column("observacoes", width=200)
+        # Larguras, alinhamento e stretch para melhor redimensionamento
+        self.tree.column("empresa", width=180, minwidth=80, anchor="w", stretch=True)
+        self.tree.column("cargo", width=170, minwidth=80, anchor="w", stretch=True)
+        self.tree.column("link", width=300, minwidth=120, anchor="w", stretch=True)
+        self.tree.column("data", width=100, minwidth=60, anchor="w", stretch=False)
+        self.tree.column("tipo", width=100, minwidth=60, anchor="w", stretch=False)
+        self.tree.column("status", width=110, minwidth=70, anchor="w", stretch=False)
+        self.tree.column("observacoes", width=300, minwidth=120, anchor="w", stretch=True)
 
+        # Grade principal da Treeview
         self.tree.grid(row=1, column=0, sticky="nsew")
 
-        scroll = ttk.Scrollbar(self, orient="vertical", command=self.tree.yview)
-        self.tree.configure(yscroll=scroll.set)
-        scroll.grid(row=1, column=1, sticky="ns")
+        # Scrollbars: vertical à direita e horizontal abaixo
+        vscroll = ttk.Scrollbar(self, orient="vertical", command=self.tree.yview)
+        self.tree.configure(yscroll=vscroll.set)
+        vscroll.grid(row=1, column=1, sticky="ns")
+
+        hscroll = ttk.Scrollbar(self, orient="horizontal", command=self.tree.xview)
+        self.tree.configure(xscroll=hscroll.set)
+        # horizontal abaixo da tabela; isso empurra a paginação para baixo
+        hscroll.grid(row=2, column=0, sticky="ew")
+
+        # Bind para redimensionar colunas dinamicamente
+        try:
+            self.bind("<Configure>", self._on_configure)
+            # redimensionamento inicial
+            self.after(50, self._resize_columns)
+        except Exception:
+            pass
 
         # Paginação simples (prev / página / next)
         pag_frame = ttk.Frame(self)
-        pag_frame.grid(row=2, column=0, sticky="w", pady=(8, 0))
+        pag_frame.grid(row=3, column=0, sticky="w", pady=(8, 0))
 
         self.prev_btn = ttk.Button(pag_frame, text="◀", command=self._on_prev, style="Icon.TButton", width=3)
         self.prev_btn.pack(side="left", padx=(0, 6))
@@ -96,7 +116,7 @@ class SPAVisualizacao(ttk.Frame):
         # Botões inferiores (somente link)
         # -----------------------------------------------------------------
         btn_frame = ttk.Frame(self)
-        btn_frame.grid(row=3, column=0, sticky="e", pady=(8, 0))
+        btn_frame.grid(row=4, column=0, sticky="e", pady=(8, 0))
 
         ttk.Button(btn_frame, text="Abrir Link", command=self._open_link).pack(
             side="left", padx=4
@@ -108,6 +128,13 @@ class SPAVisualizacao(ttk.Frame):
 
         # Carrega dados inicialmente
         self._load_data()
+
+        # Melhor visual: aumenta um pouco a altura das linhas
+        try:
+            style = ttk.Style(self)
+            style.configure("Treeview", rowheight=26)
+        except Exception:
+            pass
 
     # =====================================================================
     # CARREGAR DADOS (é chamado via ↻ no MainWindow)
@@ -149,10 +176,61 @@ class SPAVisualizacao(ttk.Frame):
                 ),
             )
 
+        # Ajusta colunas automaticamente com base no conteúdo visível
+        try:
+            self._autosize_columns(page_rows)
+        except Exception:
+            pass
+
         # Atualiza estado dos botões e label
         self.page_label.config(text=f"Página {self.page+1}/{self.total_pages}")
         self.prev_btn.config(state=("disabled" if self.page <= 0 else "normal"))
         self.next_btn.config(state=("disabled" if self.page >= self.total_pages-1 else "normal"))
+
+    # =====================================================================
+    # REDIMENSIONAMENTO AUTOMÁTICO
+    # =====================================================================
+    def _on_configure(self, event=None):
+        if self._resize_after:
+            try:
+                self.after_cancel(self._resize_after)
+            except Exception:
+                pass
+
+        self._resize_after = self.after(120, self._resize_columns)
+
+    def _resize_columns(self):
+        """Calcula larguras das colunas com base na largura disponível do widget."""
+        try:
+            self._resize_after = None
+            total_w = self.winfo_width()
+            if not total_w or total_w < 200:
+                return
+
+            # espaço para scrollbar vertical e margens
+            vbar = 20
+            padding = 24
+            avail = max(200, total_w - vbar - padding)
+
+            # alocações percentuais (soma = 1.0)
+            ratios = {
+                "empresa": 0.18,
+                "cargo": 0.18,
+                "link": 0.30,
+                "data": 0.08,
+                "tipo": 0.08,
+                "status": 0.10,
+                "observacoes": 0.08,
+            }
+
+            for col, r in ratios.items():
+                w = max(int(avail * r), 60)
+                try:
+                    self.tree.column(col, width=w)
+                except Exception:
+                    pass
+        except Exception:
+            pass
 
     # =====================================================================
     # UTILITÁRIOS
@@ -200,3 +278,60 @@ class SPAVisualizacao(ttk.Frame):
         if self.page < self.total_pages - 1:
             self.page += 1
             self._load_data()
+
+    # =====================================================================
+    # AUTO SIZE COLUMNS
+    # =====================================================================
+    def _autosize_columns(self, rows):
+        """Calcula a largura ideal de cada coluna com base no cabeçalho e no conteúdo da
+        página atual, usando medidas de fonte para evitar cortes de texto."""
+        try:
+            font = tkfont.nametofont("TkDefaultFont")
+        except Exception:
+            font = None
+
+        cols = [
+            "empresa",
+            "cargo",
+            "link",
+            "data",
+            "tipo",
+            "status",
+            "observacoes",
+        ]
+
+        padding = 18
+        max_widths = {}
+
+        # Começa pelo tamanho do cabeçalho
+        for c in cols:
+            header = self.tree.heading(c).get("text", c)
+            w = (font.measure(header) if font else len(header) * 8) + padding
+            max_widths[c] = w
+
+        # Verifica conteúdo da página atual
+        for r in rows:
+            for c in cols:
+                txt = str(r.get(c, ""))
+                m = (font.measure(txt) if font else len(txt) * 8) + padding
+                if m > max_widths.get(c, 0):
+                    max_widths[c] = m
+
+        # Se houver espaço restante, distribui preferencialmente para 'link' e 'observacoes'
+        total_needed = sum(max_widths.values())
+        avail = self.winfo_width() or self.winfo_reqwidth() or 800
+        # reserva para scrollbar e margens
+        reserve = 60
+        extra = avail - total_needed - reserve
+        if extra > 40:
+            add_link = int(extra * 0.65)
+            add_obs = extra - add_link
+            max_widths["link"] = max_widths.get("link", 100) + add_link
+            max_widths["observacoes"] = max_widths.get("observacoes", 100) + add_obs
+
+        # Aplica larguras calculadas
+        for c, w in max_widths.items():
+            try:
+                self.tree.column(c, width=int(w), minwidth=60)
+            except Exception:
+                pass
